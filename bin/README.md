@@ -9,9 +9,11 @@ page. Put binaries in `bin` directory so that the directory structure looks like
   📂 Debug/
 	📄 AppPlatform.dll
 	📄 AppPlatform.pdb
+	📄 AppPlatform.exp
 	📄 AppPlatform.lib
   📂 Release/
 	📄 AppPlatform.dll
+	📄 AppPlatform.exp
 	📄 AppPlatform.lib
 ```
 
