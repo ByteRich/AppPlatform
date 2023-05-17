@@ -14,3 +14,13 @@ page. Put binaries in `bin` directory so that the directory structure looks like
 	📄 AppPlatform.dll
 	📄 AppPlatform.lib
 ```
+
+## Versions
+
+Always clone the repository using a version tag, e.g.:
+
+```
+git clone --branch v1.0.0
+```
+
+Make sure that you downloaded the correct release version - the one that matches the tag.
