@@ -6,7 +6,7 @@ built using web technologies (React, TypeScript, HTML, CSS, etc.).
 > **Note**
 > This repository contains the public part of the source code.
 > The library is meant to be linked dynamically using the provided
-> binaries. You can download them from [Releases](https://github.com/UnstableBytes/releases)
+> binaries. You can download them from [Releases](https://github.com/UnstableBytes/AppPlatform/releases)
 > page.
 
 ## Getting started
