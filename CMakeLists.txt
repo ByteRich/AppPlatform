@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.25)
 include(FetchContent)
 
-project(UBytesAppPlatform LANGUAGES CXX VERSION 0.1.0)
+project(UBytesAppPlatform LANGUAGES CXX VERSION 0.1.1)
 
 set(APP_NAME AppPlatform)
 
@@ -25,11 +25,17 @@ target_link_libraries(${APP_NAME} INTERFACE UBytesAppPlatform)
 
 set(HAS_BINARIES FALSE)
 if(NOT IS_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/bin/Release")
+	if (WIN32)
+		set(BINARIES_URL_OS_PREFIX "x64-windows")
+	else()
+		message(FATAL_ERROR "AppPlatform doesn't support platforms other than Windows yet.")
+	endif()
+
 	message(STATUS "AppPlatform binaries not found, downloading...")
 	FetchContent_Declare(
 		AppPlatformBinaries
-		URL        https://github.com/UnstableBytes/AppPlatform/releases/download/v${CMAKE_PROJECT_VERSION}/binary-release.zip
-		SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}
+		URL        https://github.com/UnstableBytes/AppPlatform/releases/download/v${CMAKE_PROJECT_VERSION}/${BINARIES_URL_OS_PREFIX}-binaries.zip
+		SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/bin
 	)
 	FetchContent_MakeAvailable(AppPlatformBinaries)
 endif()

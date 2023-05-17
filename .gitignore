@@ -1,6 +1,3 @@
 build/
-bin/Debug/
-bin/Release/
+bin/
 .vscode/
-
-!bin/README.md

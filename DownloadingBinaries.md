@@ -5,7 +5,6 @@ page. Put binaries in `bin` directory so that the directory structure looks like
 
 ```
 📂 bin/
-  📄 README.md
   📂 Debug/
 	📄 AppPlatform.dll
 	📄 AppPlatform.pdb
