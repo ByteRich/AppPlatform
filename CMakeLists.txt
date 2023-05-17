@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.25)
-project(UBytesAppPlatform CXX)
+include(FetchContent)
+
+project(UBytesAppPlatform LANGUAGES CXX VERSION 0.1.0)
 
 set(APP_NAME AppPlatform)
 
@@ -20,3 +22,14 @@ target_link_directories(${APP_NAME} INTERFACE
 )
 
 target_link_libraries(${APP_NAME} INTERFACE UBytesAppPlatform)
+
+set(HAS_BINARIES FALSE)
+if(NOT IS_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/bin/Release")
+	message(STATUS "AppPlatform binaries not found, downloading...")
+	FetchContent_Declare(
+		AppPlatformBinaries
+		URL        https://github.com/UnstableBytes/AppPlatform/releases/download/v${CMAKE_PROJECT_VERSION}/binary-release.zip
+		SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}
+	)
+	FetchContent_MakeAvailable(AppPlatformBinaries)
+endif()
