@@ -48,6 +48,12 @@ public:
   /// Makes the window borderless (e.g. no title bar, no borders, etc.)
   auto set_borderless() -> void;
 
+  /// Returns true if the window is maximized.
+  auto is_maximized() const -> bool;
+
+  /// Returns true if the window is minimized.
+  auto is_minimized() const -> bool;
+
   /// Returns true if the window is borderless.
   auto is_borderless() const -> bool
   {
