@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.25)
 include(FetchContent)
 
-project(UBytesAppPlatform LANGUAGES CXX VERSION 1.0.0)
+project(UBytesAppPlatform LANGUAGES CXX VERSION 1.0.1)
 
 set(APP_NAME AppPlatform)
 
