@@ -112,6 +112,8 @@ public:
   /// Changes the parent of the WebView to another window.
   auto set_parent_window(WindowHandle window) -> void;
 
+  // Navigating to URLs
+
   /// Navigates to the specified UTF-8 encoded URL.
   auto navigate(std::string_view url) -> void;
 
@@ -119,9 +121,41 @@ public:
   auto navigate(std::u8string_view url) -> void;
 
   /// Navigates to the specified UCS-2 encoded URL.
-  /// @note This function is a faster alternative to the UTF-8 version on Windows
+  /// @note This function is a faster alternative to the UTF-8 variant on Windows
   /// because it doesn't need to convert the string to UTF-8.
-  auto navigate(std::wstring const& url) -> void;
+  auto navigate(std::wstring_view url) -> void;
+
+  // Sending JSON messages
+
+  /// Sends a JSON message to the WebView JS window.
+  /// @param message The message to send - must be UTF-8, null-terminated string slice containing a valid JSON.
+  auto send_message(std::string_view message) -> void;
+
+  /// Sends a JSON message to the WebView JS window.
+  /// @param message The message to send - must be UTF-8, null-terminated string slice containing a valid JSON.
+  auto send_message(std::u8string_view message) -> void;
+
+  /// Sends a JSON message to the WebView JS window.
+  /// @param message The message to send - must be UCS-2, null-terminated string slice containing a valid JSON.
+  /// @note This function is a faster alternative to the UTF-8 variant on Windows
+  /// because it doesn't need to convert the string to UTF-8.
+  auto send_message(std::wstring_view message) -> void;
+
+  // Sending raw messages
+
+  /// Sends a string message to the WebView JS window.
+  /// @param message The message to send - must be UTF-8, null-terminated string slice.
+  auto send_message_str(std::string_view message) -> void;
+
+  /// Sends a string message to the WebView JS window.
+  /// @param message The message to send - must be UTF-8, null-terminated string slice.
+  auto send_message_str(std::u8string_view message) -> void;
+
+  /// Sends a string message to the WebView JS window.
+  /// @param message The message to send - must be UCS-2, null-terminated string slice.
+  /// @note This function is a faster alternative to the UTF-8 variant on Windows
+  /// because it doesn't need to convert the string to UTF-8.
+  auto send_message_str(std::wstring_view message) -> void;
 
   details::WebViewOpaque _opaque;
 private:

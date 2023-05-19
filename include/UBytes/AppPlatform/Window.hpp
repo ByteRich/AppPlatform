@@ -1,8 +1,10 @@
 #pragma once
 
 #include <memory>
+#include <string_view>
 
 #include <UBytes/AppPlatform/Export.hpp>
+#include <UBytes/AppPlatform/Core/Vec2.hpp>
 #include <UBytes/AppPlatform/Core/Rect.hpp>
 #include <UBytes/AppPlatform/Core/Color.hpp>
 
@@ -48,6 +50,31 @@ public:
   /// Makes the window borderless (e.g. no title bar, no borders, etc.)
   auto set_borderless() -> void;
 
+  /// Sets the title of the window.
+  /// @param title - utf8 encoded string
+  auto set_title(std::string_view title) -> void;
+
+  /// Returns the title of the window as an UTF-8 encoded string.
+  auto get_title() const -> std::string;
+
+  /// Sets the absolute window size.
+  auto set_size(Vec2u size) -> void;
+
+  /// Returns the absolute window size.
+  auto get_size() const -> Vec2u;
+
+  /// Sets the absolute position of the window.
+  auto set_position(Vec2i position) -> void;
+
+  /// Returns the absolute position of the window.
+  auto get_position() const -> Vec2i;
+
+  /// Sets the absolute bounds of the window.
+  auto set_bounds(Rect2i bounds) -> void;
+
+  /// Returns the absolute bounds of the window.
+  auto get_bounds() const -> Rect2i;
+
   /// Returns true if the window is maximized.
   auto is_maximized() const -> bool;
 
@@ -61,7 +88,7 @@ public:
   }
 
   /// Returns the client size of the window.
-  auto get_inner_size() const -> Rect2u;
+  auto get_inner_size() const -> Vec2u;
 
   // Requests
 
@@ -78,7 +105,7 @@ public:
 
   /// Called when the window is resized.
   /// @param new_size The new size of the window.
-  virtual auto on_resize(Rect2u new_size) -> void
+  virtual auto on_resize(Rect2i new_size) -> void
   {
   }
 
