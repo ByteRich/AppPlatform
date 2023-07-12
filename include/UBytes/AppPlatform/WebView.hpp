@@ -81,6 +81,11 @@ public:
   /// The WebView cannot be moved before the setup is finished.
   auto begin_setup(Window const& window) -> void;
 
+  /// Starts the setup of the WebView using a native window handle.
+  /// @note [pre-ready]
+  /// The WebView cannot be moved before the setup is finished.
+  auto begin_setup(WindowHandle window_handle) -> void;
+
   /// Determines whether the WebView is ready to be used.
   /// @note [pre-ready]
   auto setup_finished() const -> bool
