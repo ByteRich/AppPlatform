@@ -32,6 +32,24 @@ static_assert(sizeof(WebViewOpaque) == 2 * sizeof(void*), "WebViewOpaque size is
 } // namespace details
 
 
+struct UBYTES_EXPORT WebViewSettings
+{
+  struct Features
+  {
+    /// Controls [the elastic overscroll](https://tinyurl.com/yck9kdyt) feature.
+    bool elastic_overscroll = false;
+
+    /// Controls the following CSS feature:
+    ///
+    /// ```css
+    /// app-region: drag;
+    /// ```
+    /// This will enable your app window to be draggable using the title bar or
+    /// any other element with the `app-region: drag` CSS property.
+    bool draggable_regions = true;
+  } features;
+};
+
 /// A webview that can be used to display web content.
 class UBYTES_EXPORT WebView
 {
@@ -79,12 +97,12 @@ public:
   /// Starts the setup of the WebView.
   /// @note [pre-ready]
   /// The WebView cannot be moved before the setup is finished.
-  auto begin_setup(Window const& window) -> void;
+  auto begin_setup(Window const& window, WebViewSettings settings = {}) -> void;
 
   /// Starts the setup of the WebView using a native window handle.
   /// @note [pre-ready]
   /// The WebView cannot be moved before the setup is finished.
-  auto begin_setup(WindowHandle window_handle) -> void;
+  auto begin_setup(WindowHandle window_handle, WebViewSettings settings = {}) -> void;
 
   /// Determines whether the WebView is ready to be used.
   /// @note [pre-ready]
@@ -163,8 +181,8 @@ public:
   auto send_message_str(std::wstring_view message) -> void;
 
   details::WebViewOpaque _opaque;
-private:
 
+private:
   bool _setup_finished = false;
 };
 
