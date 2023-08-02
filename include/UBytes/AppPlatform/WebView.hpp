@@ -5,6 +5,7 @@
 #include <UBytes/AppPlatform/Window.hpp>
 #include <UBytes/AppPlatform/Core/Rect.hpp>
 #include <UBytes/AppPlatform/Core/Color.hpp>
+#include <UBytes/AppPlatform/Core/Keyboard.hpp>
 
 #include <functional>
 #include <array>
@@ -29,8 +30,13 @@ struct WebViewOpaque
 };
 static_assert(sizeof(WebViewOpaque) == 2 * sizeof(void*), "WebViewOpaque size is invalid");
 
-} // namespace details
+struct WebViewPermissionOpaque
+{
+  std::array<char, sizeof(void*) * 2> _data;
+};
+static_assert(sizeof(WebViewPermissionOpaque) == 2 * sizeof(void*), "WebViewPermissionOpaque size is invalid");
 
+} // namespace details
 
 struct UBYTES_EXPORT WebViewSettings
 {
@@ -54,11 +60,67 @@ struct UBYTES_EXPORT WebViewSettings
 class UBYTES_EXPORT WebView
 {
 public:
+  struct Permission
+  {
+    enum Kind
+    {
+      Unknown = 0,
+      Microphone,
+      Camera,
+      Geolocation,
+      Notifications,
+      OtherSensors,
+      ClipboardRead,
+      MultipleAutomaticDownloads,
+      FileReadWrite,
+      Autoplay,
+      LocalFonts,
+      MidiSystemExclusiveMessages,
+      WindowManagement,
+    };
+
+    enum Response
+    {
+      Default = 0,
+      Allow,
+      Deny,
+    };
+
+    class Request final
+    {
+    public:
+      Request();
+      ~Request();
+
+      auto get_kind() const -> Kind;
+      auto get_response() const -> Response;
+      auto get_saves_in_profile() const -> bool;
+      auto is_user_initiated() const -> bool;
+      auto get_url() const -> std::string;
+
+      auto set_response(Response state) const -> void;
+      auto set_saves_in_profile(bool save) const -> void;
+
+      auto mark_completed() const -> void;
+
+      details::WebViewPermissionOpaque _opaque;
+    };
+  };
+
   enum class FocusReason
   {
     Programmatic,
     TabNext,
     TabPrev,
+  };
+
+  struct AcceleratorKey
+  {
+    Keyboard::Key key;
+    bool          ctrl         = false;
+    bool          shift        = false;
+    bool          alt          = false;
+    int           repeat_count = 1;
   };
 
   // Event handlers
@@ -70,6 +132,13 @@ public:
   /// Called when a message is received from the WebView.
   /// The message is a view over UTF-8 encoded string.
   std::function<void(std::string)> on_message;
+
+  /// Called when user presses a key combination that is
+  /// registered as an "accelerator" sequence.
+  std::function<void(AcceleratorKey)> on_accelerator_key;
+
+  /// Called when the WebView requests a permission (like microphone or local file access).
+  std::function<void(Permission::Request)> on_permission_request;
 
   // Methods
 
